@@ -4,12 +4,14 @@ from labelsAccessConfigsRead import *
 parser = argparse.ArgumentParser(description="Arguments")
 
 parser.add_argument('--brand_name', required=True, help='Enter the brand name as per DB')
+parser.add_argument('--env', required=True, help='Enter the Environment')
 
 args = parser.parse_args()
 
 brand_name = args.brand_name
+env = args.env
 
-zendesk_user_email, zendesk_user_name, brand_admin_id, brand_id = get_variables(brand_name)
+zendesk_user_email, zendesk_user_name, brand_admin_id, brand_id = get_variables(brand_name, env)
 
 # Replace these with your values
 email = "donotreply-enablement@zenarate.com"           # Your Zendesk login email

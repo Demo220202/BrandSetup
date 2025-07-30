@@ -10,39 +10,6 @@ import argparse
 #
 # args = parser.parse_args()
 
-env = "local"
-
-main_config_mapper = {  # env ---> config-main db
-    "prod" : "config_store",
-    "beta" : "config_store_beta",
-    "qa2" : "config_store_qa2",
-    "qa" : "config_store_qa",
-    "perf" : "config_store_perf",
-    "local" : "config_store_local"
-}
-
-conf_secrets, main_secrets = get_secret(main_config_mapper[env])
-
-conn = mysql.connector.connect(
-    host=main_secrets["host"],
-    user=main_secrets["username"],
-    password=main_secrets["password"],
-    database=main_secrets["dbname"],
-    use_pure=True  # <-- ensures Python implementation is used
-)
-
-conn_conf_store = mysql.connector.connect(
-    host=conf_secrets["host"],
-    user=conf_secrets["username"],
-    password=conf_secrets["password"],
-    database=conf_secrets["dbname"],
-    use_pure=True  # <-- ensures Python implementation is used
-)
-
-# ✅ Use MySQLCursor explicitly to support multi=True
-cursor = conn.cursor(cursor_class=MySQLCursorBuffered)
-cursor_conf = conn_conf_store.cursor(cursor_class=MySQLCursorBuffered)
-
 # brand_name = "ResultsCX" # DB ke hisaab se rakhna hai
 
 def query_execution(con, sql, cursur):
@@ -94,7 +61,40 @@ def query_execution(con, sql, cursur):
         # conn_conf_store.close()
         return zendesk_user_email, zendesk_user_name, brand_admin_id, brand_id
 
-def get_variables(brand_name):
+def get_variables(brand_name, env):
+
+    # env = "local"
+
+    main_config_mapper = {  # env ---> config-main db
+        "prod": "config_store",
+        "beta": "config_store_beta",
+        "qa2": "config_store_qa2",
+        "qa": "config_store_qa",
+        "perf": "config_store_perf",
+        "local": "config_store_local"
+    }
+
+    conf_secrets, main_secrets = get_secret(main_config_mapper[env])
+
+    conn = mysql.connector.connect(
+        host=main_secrets["host"],
+        user=main_secrets["username"],
+        password=main_secrets["password"],
+        database=main_secrets["dbname"],
+        use_pure=True  # <-- ensures Python implementation is used
+    )
+
+    conn_conf_store = mysql.connector.connect(
+        host=conf_secrets["host"],
+        user=conf_secrets["username"],
+        password=conf_secrets["password"],
+        database=conf_secrets["dbname"],
+        use_pure=True  # <-- ensures Python implementation is used
+    )
+
+    # ✅ Use MySQLCursor explicitly to support multi=True
+    cursor = conn.cursor(cursor_class=MySQLCursorBuffered)
+    cursor_conf = conn_conf_store.cursor(cursor_class=MySQLCursorBuffered)
 
     sql = f"""
 

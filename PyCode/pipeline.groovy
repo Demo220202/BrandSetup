@@ -17,7 +17,7 @@ pipeline{
                         pip install -r requirements.txt
 
                         # Safely run Python script with proper quoting
-                        python3 ZendeskAuto.py --brand_name "$brand_name"
+                        python3 ZendeskAuto.py --brand_name "$brand_name" --env $env
                     '''
                 }
             }
