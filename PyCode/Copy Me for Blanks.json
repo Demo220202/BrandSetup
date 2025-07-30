@@ -1,0 +1,432 @@
+{
+  "luis_schema_version": "7.0.0",
+  "intents": [
+    {
+      "name": "None",
+      "features": []
+    },
+    {
+      "name": "please_hold",
+      "features": []
+    }
+  ],
+  "entities": [
+    {
+      "name": "agent.first.name",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "agent.last.name",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "audio.disclosure",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "compliance.recording",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "customer.first.name",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "customer.last.name",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "empathy.acknowledgement",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "good.bye",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "goto.rate",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "key.permission.line",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "lender.name",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "mini.miranda",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "minimum.due",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "other.cards",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "past.due",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "permission",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "promotion.expire",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "promotional.rate",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "promotional.rate.goodtowards",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "required.word",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "speak.agent",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "suggested.payment",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "total.due",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "transaction.fee",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "types.of.rewards",
+      "children": [],
+      "roles": [],
+      "features": []
+    }
+  ],
+  "hierarchicals": [],
+  "composites": [],
+  "closedLists": [],
+  "prebuiltEntities": [],
+  "utterances": [
+    {
+      "text": "allow me a minute",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "alright, i appreciate your patience, must do just be one moment here.",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "bear with me for a moment",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "bear with me one moment.",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "bear with me, just a moment.",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "bear with me. just a moment, please.",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "could you allow me a moment please?",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "could you give me a second",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "could you hold for just a minute?",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "hello allow me just a moment. just to review the system.",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "i can understand your frustration. if you don't mind, giving me a moment here while i research that for you, okay?",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "i will need one moment please",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "just a moment while i look into this.",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "mr. do, can you bear with me? just a moment?",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "okay, i do apologize for that. if you just give me a moment here while i review the account for you.",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "one minute please",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "one moment while i look into this please",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "please hold.",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "thank you, can i please you on a brief hold?",
+      "intent": "please_hold",
+      "entities": []
+    },
+    {
+      "text": "what is the best rock band of all time",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the climate in hawaii",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the fastest animal?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the fastest car",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the most common car color",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the most popular car?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the most popular vacation location",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the most valuable company in the world",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the population of germany",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the tallest mountain",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what kind of a dinosaur has blue teeth?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what was the first national park?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what's the average temperature in florida",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what's the average temperature in minnesota?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "where is the deepest part of the ocean?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "where is the us golf open this year",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "where will the olympics be held this year",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "which are better pets - cats or dogs",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "which movie won best picture of the year?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "which team won the world series",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "which zoo is the best",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "who is president of the usa?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "who is the greatest quarterback of all time",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "who is the richest person in the world",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "who owns the lakers",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "who was the first president of the usa",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "who will be the next president of the us",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "who won the most grammy's",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "who won the super bowl this year",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "will trump get funding for the wall?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "will you provide me just a minute",
+      "intent": "please_hold",
+      "entities": []
+    }
+  ],
+  "versionId": "0.1",
+  "name": "Copy Me for Blanks",
+  "desc": "",
+  "culture": "en-us",
+  "tokenizerVersion": "1.0.0",
+  "patternAnyEntities": [],
+  "regex_entities": [],
+  "phraselists": [],
+  "regex_features": [],
+  "patterns": [],
+  "settings": []
+}
