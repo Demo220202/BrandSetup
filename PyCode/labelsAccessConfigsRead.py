@@ -10,7 +10,7 @@ import argparse
 #
 # args = parser.parse_args()
 
-env = "prod"
+env = "local"
 
 main_config_mapper = {  # env ---> config-main db
     "prod" : "config_store",
