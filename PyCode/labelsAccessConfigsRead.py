@@ -110,120 +110,9 @@ def get_variables(brand_name):
             SELECT @BRANDID;
             SELECT @CREATEDBY;
 
-            -- Tag Collection
-            INSERT INTO tag_collections (name, account_id, brand_id, inactive, created_by, entity)
-            SELECT 'Interruptions', @ACCOUNTID, @BRANDID, 0, @CREATEDBY, 3
-            WHERE NOT EXISTS (
-                SELECT 1 FROM tag_collections WHERE name = 'Interruptions' AND account_id = @ACCOUNTID AND brand_id = @BRANDID
-            );
-
-            SET @TAGCOLLECTIONID = (SELECT id FROM tag_collections WHERE name = 'Interruptions' AND account_id = @ACCOUNTID);
-
-            -- Parent Tags
-            INSERT INTO tags (name, bg_color, account_id, brand_id, parent_id, level, inactive, tag_collection_id, created_by)
-            SELECT * FROM (
-                SELECT 
-                    'Soft Skills' AS name, 
-                    NULL AS bg_color, 
-                    @ACCOUNTID AS account_id, 
-                    @BRANDID AS brand_id, 
-                    0 AS parent_id, 
-                    1 AS level, 
-                    0 AS inactive, 
-                    @TAGCOLLECTIONID AS tag_collection_id, 
-                    @CREATEDBY AS created_by
-                UNION ALL
-                SELECT 
-                    'Best Practices', NULL, @ACCOUNTID, @BRANDID, 0, 1, 0, @TAGCOLLECTIONID, @CREATEDBY
-                UNION ALL
-                SELECT 
-                    'Compliance', NULL, @ACCOUNTID, @BRANDID, 0, 1, 0, @TAGCOLLECTIONID, @CREATEDBY
-            ) AS tmp
-            WHERE NOT EXISTS (
-                SELECT 1 FROM tags 
-                WHERE tags.name = tmp.name AND tags.account_id = tmp.account_id AND tags.brand_id = tmp.brand_id
-            );
-
-            -- Set tag ids
-            SET @SOFT_SKILLS = (SELECT id FROM tags WHERE name = 'Soft Skills' AND account_id = @ACCOUNTID);
-            SET @BEST_PRACTICES = (SELECT id FROM tags WHERE name = 'Best Practices' AND account_id = @ACCOUNTID);
-            SET @COMPLIANCE = (SELECT id FROM tags WHERE name = 'Compliance' AND account_id = @ACCOUNTID);
-
-            -- Child Tags
-            INSERT INTO tags (name, bg_color, account_id, brand_id, parent_id, level, inactive, tag_collection_id, created_by)
-            SELECT 'Empathy/Acknowledgement', NULL, @ACCOUNTID, @BRANDID, @SOFT_SKILLS, 2, 0, @TAGCOLLECTIONID, @CREATEDBY
-            WHERE NOT EXISTS (
-                SELECT 1 FROM tags WHERE name = 'Empathy/Acknowledgement' AND account_id = @ACCOUNTID
-            );
-
-            INSERT INTO tags (name, bg_color, account_id, brand_id, parent_id, level, inactive, tag_collection_id, created_by)
-            SELECT 'Call Opening', NULL, @ACCOUNTID, @BRANDID, @SOFT_SKILLS, 2, 0, @TAGCOLLECTIONID, @CREATEDBY
-            WHERE NOT EXISTS (
-                SELECT 1 FROM tags WHERE name = 'Call Opening' AND account_id = @ACCOUNTID
-            );
-
-            INSERT INTO tags (name, bg_color, account_id, brand_id, parent_id, level, inactive, tag_collection_id, created_by)
-            SELECT 'Probing Questions', NULL, @ACCOUNTID, @BRANDID, @SOFT_SKILLS, 2, 0, @TAGCOLLECTIONID, @CREATEDBY
-            WHERE NOT EXISTS (
-                SELECT 1 FROM tags WHERE name = 'Probing Questions' AND account_id = @ACCOUNTID
-            );
-
-            INSERT INTO tags (name, bg_color, account_id, brand_id, parent_id, level, inactive, tag_collection_id, created_by)
-            SELECT 'Issue Resolution', NULL, @ACCOUNTID, @BRANDID, @SOFT_SKILLS, 2, 0, @TAGCOLLECTIONID, @CREATEDBY
-            WHERE NOT EXISTS (
-                SELECT 1 FROM tags WHERE name = 'Issue Resolution' AND account_id = @ACCOUNTID
-            );
-
-            INSERT INTO tags (name, bg_color, account_id, brand_id, parent_id, level, inactive, tag_collection_id, created_by)
-            SELECT 'Call Closing', NULL, @ACCOUNTID, @BRANDID, @SOFT_SKILLS, 2, 0, @TAGCOLLECTIONID, @CREATEDBY
-            WHERE NOT EXISTS (
-                SELECT 1 FROM tags WHERE name = 'Call Closing' AND account_id = @ACCOUNTID
-            );
-
-            INSERT INTO tags (name, bg_color, account_id, brand_id, parent_id, level, inactive, tag_collection_id, created_by)
-            SELECT 'Authentication', NULL, @ACCOUNTID, @BRANDID, @SOFT_SKILLS, 2, 0, @TAGCOLLECTIONID, @CREATEDBY
-            WHERE NOT EXISTS (
-                SELECT 1 FROM tags WHERE name = 'Authentication' AND account_id = @ACCOUNTID
-            );
-
-            INSERT INTO tags (name, bg_color, account_id, brand_id, parent_id, level, inactive, tag_collection_id, created_by)
-            SELECT 'Disclosures', NULL, @ACCOUNTID, @BRANDID, @SOFT_SKILLS, 2, 0, @TAGCOLLECTIONID, @CREATEDBY
-            WHERE NOT EXISTS (
-                SELECT 1 FROM tags WHERE name = 'Disclosures' AND account_id = @ACCOUNTID
-            );
-
             -- Zendesk Email
             SET @brand_url = (SELECT url FROM brand WHERE name = @brandName);
             SET @zendesk_user = CONCAT(SUBSTRING_INDEX(@brand_url, '.', 1), '.zendesk@zenarate.com');
-
-            -- ZENDESK_CONFIG
-            INSERT INTO brand_configs (brand_id, config_type, config_json, inactive, created_by, created_at)
-            SELECT @brand_id, 'ZENDESK_CONFIG', CONCAT('{{"enable": true, "zendesk_user_name": "{brand_name}", "zendesk_user_email": "', @zendesk_user, '"}}'), 0, 0, NOW()
-            WHERE NOT EXISTS (
-                SELECT 1 FROM brand_configs WHERE brand_id = @brand_id AND config_type = 'ZENDESK_CONFIG'
-            );
-
-            -- SCIM_CONFIG
-            INSERT INTO brand_configs (brand_id, config_type, config_json, inactive, created_by, created_at)
-            SELECT @brand_id, 'SCIM_CONFIG', '{{"roles_allowed": ["TeamAdmin", "AccountAdmin", "AIAdmin", "rep", "SuperUser", "user", "Cross-TeamAdmin"]}}', 0, 0, NOW()
-            WHERE NOT EXISTS (
-                SELECT 1 FROM brand_configs WHERE brand_id = @brand_id AND config_type = 'SCIM_CONFIG'
-            );
-
-            -- Update brand_settings (skip if already has zendesk config)
-            UPDATE brand_settings
-            SET settings_json = CONCAT(
-                LEFT(settings_json, LENGTH(settings_json) - 1),
-                ', "zendesk_user_name": "{brand_name}", "zendesk_user_email": "', @zendesk_user, '"}}'
-            )
-            WHERE brand_id = @BRANDID AND settings_json NOT LIKE '%zendesk_user_name%';
-
-            -- Story Completion Criteria
-            INSERT INTO story_completion_criteria (brand_id, story_id, criteria_json)
-            SELECT @brand_id, NULL, '{{"nlp":{{"story_end":{{"_and":[{{"nlp_end":{{"value_type":"bool","opr":"equalsto","value":true}}}},{{"screensim_end":{{"value_type":"bool","opr":"equalsto","value":true}}}}]}}}}}}'
-            WHERE NOT EXISTS (
-                SELECT 1 FROM story_completion_criteria WHERE brand_id = @brand_id
-            );
 
             SELECT @zendesk_user AS zendesk_user_email, @brandName AS zendesk_user_name;
 
@@ -231,32 +120,32 @@ def get_variables(brand_name):
 
     zendesk_user_email, zendesk_user_name, brand_admin_id, brand_id = query_execution(conn, sql, cursor)
 
-    config_store_sql = f"""
+    # config_store_sql = f"""
+    #
+    #             INSERT INTO brands_config (
+    #                 brand_id, config_type, enabled, config_json, mapper, status,
+    #                 created_at, created_by, updated_at, updated_by, deleted_at, deleted_by
+    #             )
+    #             SELECT
+    #                 {brand_id},
+    #                 'SCIM_CONFIG',
+    #                 '1',
+    #                 '{{"scim_version": "v1", "roles_allowed": ["TeamAdmin", "AccountAdmin", "AIAdmin", "rep", "SuperUser", "user", "Cross-TeamAdmin"], "scim_role_type": "STRING", "scim_label_type": "STRING"}}',
+    #                 '{{"SCIM_CONFIG": "enable_scim"}}',
+    #                 'ACTIVE',
+    #                 NOW(),
+    #                 {brand_admin_id},
+    #                 NOW(),
+    #                 {brand_admin_id},
+    #                 NULL,
+    #                 NULL
+    #             WHERE NOT EXISTS (
+    #                 SELECT 1 FROM brands_config WHERE brand_id = {brand_id} AND config_type = 'SCIM_CONFIG'
+    #             );
+    #
+    #         """
 
-                INSERT INTO brands_config (
-                    brand_id, config_type, enabled, config_json, mapper, status, 
-                    created_at, created_by, updated_at, updated_by, deleted_at, deleted_by
-                )
-                SELECT
-                    {brand_id}, 
-                    'SCIM_CONFIG', 
-                    '1', 
-                    '{{"scim_version": "v1", "roles_allowed": ["TeamAdmin", "AccountAdmin", "AIAdmin", "rep", "SuperUser", "user", "Cross-TeamAdmin"], "scim_role_type": "STRING", "scim_label_type": "STRING"}}', 
-                    '{{"SCIM_CONFIG": "enable_scim"}}', 
-                    'ACTIVE', 
-                    NOW(), 
-                    {brand_admin_id}, 
-                    NOW(), 
-                    {brand_admin_id}, 
-                    NULL, 
-                    NULL
-                WHERE NOT EXISTS (
-                    SELECT 1 FROM brands_config WHERE brand_id = {brand_id} AND config_type = 'SCIM_CONFIG'
-                );
-
-            """
-
-    query_execution(conn_conf_store, config_store_sql, cursor_conf)
+    # query_execution(conn_conf_store, config_store_sql, cursor_conf)
 
     # print("✅ All queries executed successfully. Changes committed.")
     #

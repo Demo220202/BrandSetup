@@ -7,7 +7,7 @@ pipeline{
     }
     stages{
 
-        stage ('Labels Configs and Zendesk'){
+        stage ('Zendesk User Creation'){
             steps{
                 dir("PyCode"){
                     sh '''
@@ -17,7 +17,7 @@ pipeline{
                         pip install -r requirements.txt
 
                         # Safely run Python script with proper quoting
-                        python3 labelsAccessConfigs.py --brand_name "$brand_name" --env $env
+                        python3 ZendeskAuto.py --brand_name "$brand_name"
                     '''
                 }
             }
