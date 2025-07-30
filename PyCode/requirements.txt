@@ -8,3 +8,4 @@ azure-mgmt-resource
 azure-cli
 azure-mgmt-cognitiveservices
 urllib3
+subprocess
