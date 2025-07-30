@@ -7,17 +7,17 @@ pipeline{
     }
     stages{
 
-        stage ('User Creation'){
+        stage ('Labels Configs and Zendesk'){
             steps{
                 dir("PyCode"){
                     sh '''
-                        python3 -m venv venvbs3a
-                        . venvbs3a/bin/activate
+                        python3 -m venv venvbs4a
+                        . venvbs4a/bin/activate
                         pip install --upgrade pip
                         pip install -r requirements.txt
 
                         # Safely run Python script with proper quoting
-                        python3 NewUserCreationAPIAuto.py --brand_name "$brand_name" --env $env --user_email $user_email
+                        python3 labelsAccessConfigs.py --brand_name "$brand_name" --env $env
                     '''
                 }
             }
