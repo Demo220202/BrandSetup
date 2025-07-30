@@ -3,14 +3,14 @@ from mysql.connector.cursor import MySQLCursorBuffered
 from rdsConnectAzure import *
 import argparse
 
-parser = argparse.ArgumentParser(description="Arguments")
+# parser = argparse.ArgumentParser(description="Arguments")
+#
+# parser.add_argument('--env', required=True, help='Environemt e.g., pa, prod, etc')
+# parser.add_argument('--brand_name', required=True, help='Enter the brand name as per DB')
+#
+# args = parser.parse_args()
 
-parser.add_argument('--env', required=True, help='Environemt e.g., pa, prod, etc')
-parser.add_argument('--brand_name', required=True, help='Enter the brand name as per DB')
-
-args = parser.parse_args()
-
-env = args.env
+env = "prod"
 
 main_config_mapper = {  # env ---> config-main db
     "prod" : "config_store",
@@ -157,22 +157,22 @@ def get_variables(brand_name):
     return zendesk_user_email, zendesk_user_name, brand_admin_id, brand_id
 
 
-def main():
-
-    brand_name = args.brand_name  # DB ke hisaab se rakhna hai
-
-    zendesk_user_email, zendesk_user_name, brand_admin_id, brand_id = get_variables(brand_name)
-
-    print("✅ All queries executed successfully. Changes committed.")
-
-    print(f"📧 Zendesk User Email: {zendesk_user_email}")
-    print(f"👤 Zendesk User Name: {zendesk_user_name}")
-    print(f"Brand Admin: {brand_admin_id}")
-    print(f"Brand ID: {brand_id}")
-
-
-if __name__ == "__main__":
-    main()
+# def main():
+#
+#     # brand_name = args.brand_name  # DB ke hisaab se rakhna hai
+#
+#     zendesk_user_email, zendesk_user_name, brand_admin_id, brand_id = get_variables(brand_name)
+#
+#     print("✅ All queries executed successfully. Changes committed.")
+#
+#     print(f"📧 Zendesk User Email: {zendesk_user_email}")
+#     print(f"👤 Zendesk User Name: {zendesk_user_name}")
+#     print(f"Brand Admin: {brand_admin_id}")
+#     print(f"Brand ID: {brand_id}")
+#
+#
+# if __name__ == "__main__":
+#     main()
 
 
 
