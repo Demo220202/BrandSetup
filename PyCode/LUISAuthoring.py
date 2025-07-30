@@ -225,7 +225,7 @@ if __name__ == "__main__":
     # Sample JSON
 
     json_path = "Sample template.json"
-    new_app_name = f"{dataJson["brand_name"]} - Prod"
+    new_app_name = f"{dataJson['brand_name']} - Prod"
     region = "westus"
 
     add_train_n_publish(json_path, new_app_name, region)
