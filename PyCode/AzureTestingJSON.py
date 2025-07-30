@@ -105,7 +105,7 @@ def getResourceJSON(subscription_id):
 
 
     # Authenticate with DefaultAzureCredential
-    set_subscription(subscription_id)
+    # set_subscription(subscription_id)
     credential = authenticate()
     subscription_client = SubscriptionClient(credential)
     subscription = subscription_client.subscriptions.get(subscription_id)
