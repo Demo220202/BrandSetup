@@ -11,8 +11,8 @@ pipeline{
             steps{
                 dir("PyCode"){
                     sh '''
-                        python3 -m venv venvbs4a
-                        . venvbs4a/bin/activate
+                        python3 -m venv venvbs4b
+                        . venvbs4b/bin/activate
                         pip install --upgrade pip
                         pip install -r requirements.txt
 
