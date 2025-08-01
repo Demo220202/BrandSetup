@@ -55,6 +55,8 @@ print(ReportingAppResource)
 # Environment setup
 AUTHORING_KEY = dataJson["luis_authoring"][1]
 ENDPOINT = dataJson["luis_authoring"][2]  # e.g. https://westus.api.cognitive.microsoft.com
+ENDPOINT = ENDPOINT.replace(".com/", ".com")
+
 HEADERS = {
     'Ocp-Apim-Subscription-Key': AUTHORING_KEY,
     'Content-Type': 'application/json'
