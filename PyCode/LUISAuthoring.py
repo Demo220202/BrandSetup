@@ -101,12 +101,8 @@ def checkKey(region, app_id):
 
 def get_azure_rm_token():
     
-    client_id = os.getenv("ARM_CLIENT_ID")
-    client_secret = os.getenv("ARM_CLIENT_SECRET")
-    tenant_id = os.getenv("ARM_TENANT_ID")
-    
-    credential = ClientSecretCredential(tenant_id, client_id, client_secret)
-    token = credential.get_token("https://management.azure.com/.default")
+    credential = authenticate()
+    token = credential.get_token("https://management.azure.com/.default").token
     return token
 
 def assign_prediction_resource_to_luis_app(app_id, region, resource_name, resource_group, subscription_id):
