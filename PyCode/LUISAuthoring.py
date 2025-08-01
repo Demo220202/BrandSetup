@@ -5,6 +5,7 @@ import subprocess
 import json
 import argparse
 from azure.identity import ClientSecretCredential
+from azure.mgmt.resource import SubscriptionClient
 
 from AzureTestingJSON import getResourceJSON
 
@@ -85,17 +86,21 @@ def checkKey(region, app_id):
     resp = requests.get(url, headers=headers)
     print(resp.status_code, resp.text)
 
-def get_azure_rm_token():
-    """Get Azure Resource Manager token for LUIS ARM operations."""
-    result = subprocess.run(
-        ['az', 'account', 'get-access-token', '--resource', 'https://management.core.windows.net/', '--query', 'accessToken', '--output', 'tsv'],
-        capture_output=True,
-        text=True
-    )
-    if result.returncode != 0:
-        raise Exception(f"Failed to get token: {result.stderr}")
-    return result.stdout.strip()
+# def get_azure_rm_token():
+#     """Get Azure Resource Manager token for LUIS ARM operations."""
+#     result = subprocess.run(
+#         ['az', 'account', 'get-access-token', '--resource', 'https://management.core.windows.net/', '--query', 'accessToken', '--output', 'tsv'],
+#         capture_output=True,
+#         text=True
+#     )
+#     if result.returncode != 0:
+#         raise Exception(f"Failed to get token: {result.stderr}")
+#     return result.stdout.strip()
 
+def get_azure_rm_token():
+    credential = ClientSecretCredential(tenant_id, client_id, client_secret)
+    token = credential.get_token("https://management.azure.com/.default")
+    return token
 
 def assign_prediction_resource_to_luis_app(app_id, region, resource_name, resource_group, subscription_id):
     token = get_azure_rm_token()
